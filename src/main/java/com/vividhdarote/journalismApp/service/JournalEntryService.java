@@ -25,13 +25,19 @@ public class JournalEntryService {
         return journalEntryRepository.findAll();
     }
 
-   // @Transactional
+    @Transactional
     public void saveEntry(JournalEntry journalEntry, String userName){
-        User user= userService.findByUserName(userName);
-        journalEntry.setDate(LocalDateTime.now());
-        JournalEntry saved = journalEntryRepository.save(journalEntry);
-        user.getJournalEntryList().add(saved);
-        userService.saveEntry(user);
+        try{
+            User user= userService.findByUserName(userName);
+            journalEntry.setDate(LocalDateTime.now());
+            JournalEntry saved = journalEntryRepository.save(journalEntry);
+            user.getJournalEntryList().add(saved);
+            userService.saveEntry(user);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            throw new RuntimeException("An error occurred while saving the data: "+e);
+        }
     }
 
     public void saveEntry(JournalEntry journalEntry){
