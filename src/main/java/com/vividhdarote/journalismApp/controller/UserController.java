@@ -4,7 +4,6 @@ import com.vividhdarote.journalismApp.entity.User;
 import com.vividhdarote.journalismApp.repository.UserRepository;
 import com.vividhdarote.journalismApp.service.UserService;
 import lombok.Data;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +29,7 @@ public class UserController {
         return userService.getAll();
     }
 
-/*    @PostMapping
-    public void createUser(@RequestBody User user) {
-        userService.saveEntry(user);
-    }*/
+
 
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody User user) {
@@ -51,7 +47,7 @@ public class UserController {
         userInDb.setUserName(user.getUserName());
         userInDb.setPassword(user.getPassword());
 
-        userService.saveEntry(userInDb);
+        userService.saveNewUser(userInDb);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body("User updated successfully.");
