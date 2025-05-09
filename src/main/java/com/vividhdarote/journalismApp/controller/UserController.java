@@ -24,10 +24,10 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
+/*    @GetMapping
     public List<User> getAllUsers() {
         return userService.getAll();
-    }
+    }*/
 
 
 
@@ -37,13 +37,6 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User userInDb = userService.findByUserName(username);
-
-        if (userInDb == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User with username '" + username + "' not found.");
-        }
-
-        // Optionally update only certain fields
         userInDb.setUserName(user.getUserName());
         userInDb.setPassword(user.getPassword());
 

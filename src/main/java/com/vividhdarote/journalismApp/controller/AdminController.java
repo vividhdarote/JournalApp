@@ -1,6 +1,7 @@
 package com.vividhdarote.journalismApp.controller;
 
 
+import com.vividhdarote.journalismApp.config.SpringSecurity;
 import com.vividhdarote.journalismApp.entity.User;
 import com.vividhdarote.journalismApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,22 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SpringSecurity security;
+
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers() {
-        List<User> all = userService.getAll();
-        if (all != null && !all.isEmpty()) {
-            return new ResponseEntity<>(all, HttpStatus.OK);
+        try{
+            List<User> all = userService.getAll();
+            if (all != null && !all.isEmpty()) {
+                return new ResponseEntity<>(all, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Something went wrong while fetching users.");
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @PostMapping("/create-admin-user")
