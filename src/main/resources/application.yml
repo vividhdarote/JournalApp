@@ -1,0 +1,9 @@
+
+
+spring:
+  application:
+    name: JournalismApp
+  data:
+    mongodb:
+      uri: mongodb+srv://darotevishnu:IzDdN9aOJaMrs7Ty@cluster1.vbc50oi.mongodb.net/journaldb?retryWrites=true&w=majority&appName=Cluster1
+      auto-index-creation: true
