@@ -3,7 +3,30 @@
 spring:
   application:
     name: JournalismApp
+
+  redis:
+    host: redis-12868.crce182.ap-south-1-1.ec2.redns.redis-cloud.com
+    port: 12868
+    password: GhQM1qxmBz86V8OZnbEA9JtzrUUvFLb9@redis
+
+
   data:
     mongodb:
       uri: mongodb+srv://darotevishnu:IzDdN9aOJaMrs7Ty@cluster1.vbc50oi.mongodb.net/journaldb?retryWrites=true&w=majority&appName=Cluster1
       auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: darotevividh@gmail.com
+    password: ybqf riqe csnc exsu
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+weather:
+  api:
+    key: 0e670a8693b00555a4058b39f6d50ca4

@@ -1,8 +1,10 @@
 package com.vividhdarote.journalismApp.controller;
 
+import com.vividhdarote.journalismApp.api.response.WeatherResponse;
 import com.vividhdarote.journalismApp.entity.User;
 import com.vividhdarote.journalismApp.repository.UserRepository;
 import com.vividhdarote.journalismApp.service.UserService;
+import com.vividhdarote.journalismApp.service.WeatherService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,11 +26,8 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-/*    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAll();
-    }*/
-
+    @Autowired
+    private WeatherService weatherService;
 
 
     @PutMapping
@@ -39,6 +38,8 @@ public class UserController {
         User userInDb = userService.findByUserName(username);
         userInDb.setUserName(user.getUserName());
         userInDb.setPassword(user.getPassword());
+        userInDb.setEmail(user.getEmail());
+        userInDb.setCity(user.getCity());
 
         userService.saveNewUser(userInDb);
 
@@ -53,5 +54,27 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+
+    //Weather API
+    @GetMapping
+    public ResponseEntity<?> greeting() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User userInDB = userService.findByUserName(username);
+        if(userInDB == null){
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
+        WeatherResponse weatherResponse = weatherService.getWeather(userInDB.getCity());
+        String greeting = "";
+        if (weatherResponse != null) {
+            greeting = "! "+weatherResponse.getLocation().getName()+", "+weatherResponse.getLocation().getCountry()+" Temperature goes to " + weatherResponse.getCurrent().getTemperature();
+        }
+        return new ResponseEntity<>("Hi " + username + greeting, HttpStatus.OK);
+    }
 }
+
+
+
 

@@ -2,6 +2,7 @@ package com.vividhdarote.journalismApp.entity;
 
 
 
+import com.vividhdarote.journalismApp.enums.Sentiment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -22,6 +23,7 @@ public class JournalEntry {
     private String title;
     private String content;
     private LocalDateTime date;
+    private Sentiment sentiment;
 
 
 }

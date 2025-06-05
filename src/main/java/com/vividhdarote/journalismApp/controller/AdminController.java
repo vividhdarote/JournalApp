@@ -1,6 +1,7 @@
 package com.vividhdarote.journalismApp.controller;
 
 
+import com.vividhdarote.journalismApp.cache.AppCache;
 import com.vividhdarote.journalismApp.config.SpringSecurity;
 import com.vividhdarote.journalismApp.entity.User;
 import com.vividhdarote.journalismApp.service.UserService;
@@ -21,6 +22,9 @@ public class AdminController {
     @Autowired
     private SpringSecurity security;
 
+    @Autowired
+    private AppCache appCache;
+
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers() {
         try{
@@ -39,5 +43,11 @@ public class AdminController {
     @PostMapping("/create-admin-user")
     public void createAdminUser(@RequestBody User user){
         userService.saveAdmin(user);
+    }
+
+
+    @GetMapping("clear-app-cache")
+    public void clearAppCache(){
+        appCache.init();
     }
 }
