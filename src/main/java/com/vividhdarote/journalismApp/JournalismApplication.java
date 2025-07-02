@@ -22,7 +22,7 @@ public class JournalismApplication {
 	}
 
 	@Bean
-	public PlatformTransactionManager falana(MongoDatabaseFactory dbFactory){
+	public PlatformTransactionManager database(MongoDatabaseFactory dbFactory){
 		return new MongoTransactionManager(dbFactory);
 	}
 

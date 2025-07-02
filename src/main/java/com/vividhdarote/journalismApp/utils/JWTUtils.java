@@ -15,6 +15,13 @@ public class JWTUtils {
 
     private String SECRET_KEY = "TaK+HaV^uvCHEFsEVfypW#7g9^k*Z8$V";
 
+    /**
+     * This method returns the signing key used for JWT token generation and validation.
+     * It uses the SECRET_KEY to create a SecretKey object.
+     *
+     * @return SecretKey
+     */
+
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
